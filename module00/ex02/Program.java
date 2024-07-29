@@ -12,8 +12,7 @@ public class Program {
 	}
 
 	static boolean isPrime(int number) {
-		int i = 2;
-        if (number < i)
+        if (number < 2)
 			return false;
         int sqrtNumber = (int)Math.sqrt(number); 
         for (int  i = 2; i <= sqrtNumber; i++) {
@@ -26,14 +25,23 @@ public class Program {
 	}
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		int count = 0;
-		while (sc.hasNext()) {
-			int number = sc.nextInt();
+		try {
+		while (true) {
+			System.out.print("-> ");
+			if (!scanner.hasNextInt())
+				throw new Exception("IllegalArgument");
+			int number = scanner.nextInt();
+			if (number == 42)
+				break;
 			number = sumOfDigits(number);
 			if (isPrime(number))
 				count++;
 		}
 		System.out.format("Count of coffee-request : %d\n", count);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 }
