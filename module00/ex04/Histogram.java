@@ -15,10 +15,10 @@ public class Histogram {
             }
         }
 
-        // Scale factor to adjust frequencies to maxSymbols
+    
         double scale = (double) maxSymbols / maxFrequency;
 
-        // Scaled frequencies
+    
         int[] scaledFrequencies = new int[frequencies.length];
         for (int i = 0; i < frequencies.length; i++) {
             scaledFrequencies[i] = (int) (frequencies[i] * scale);
