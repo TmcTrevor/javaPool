@@ -42,6 +42,7 @@ public class Program {
 		System.out.format("Count of coffee-request : %d\n", count);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+			scanner.close();
 		}
 	}
 }
