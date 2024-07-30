@@ -1,57 +1,315 @@
+
 import java.util.Scanner;
+
 class Program {
 
-    public static String[] students = new String[10];
-    String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};
+    public static String[] students = new String[10]; ///
+    public static String[] schoolDays = new String[10]; // WE  MO FR MO SU
+    public static int[] timeShift = new int[10]; // 4 5 6 4 2 
+    public static String[][] attendanceArray = new String[10000][4];
+    public static String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};
+
+        public static String[][] cleanAndResizeArray(String[][] array) {
+        // Count non-null entries
+        int validCount = 0;
+        for (String[] entry : array) {
+            if (entry != null) {
+                validCount++;
+            }
+        }
+
+        // Create a new array with the size of valid entries
+        String[][] cleanedArray = new String[validCount][];
+        int index = 0;
+
+        // Copy non-null entries to the new array
+        for (String[] entry : array) {
+            if (entry != null) {
+                cleanedArray[index] = entry;
+                index++;
+            }
+        }
+
+        return cleanedArray;
+    }
+        public static void displayFirstLine() {
+        for (int i = 0; i < 15; i++) {
+            System.out.println(" ");
+        }
+
+        for (int i = 0; i < 31; i++) {
+            int dayOfWeekIndex = i % 7;
+            String currentDay = weekDays[dayOfWeekIndex];
+            for (int j = 0; j < schoolDays.length; j++) {
+                if (schoolDays[j] != null && schoolDays[j].equals(currentDay)) {
+                    String tmp = i + 1 > 10 ? "" : "0";
+                    System.out.print("  " + timeShift[j] + ":00 " + schoolDays[j] + " " + tmp + (i + 1) + "|");
+                }
+
+            }
+        }
+        System.out.println("");
+    }
+
+    public static void displayStudentData(String[][] attendance) {
+        for (int i = 0; i < 10; i++) {
+            if (students[i] != null) {
+                System.err.print(students[i]);
+                for (int j = 0; j < 15 - students[i].length(); j++) {
+                    System.out.print(" ");
+                }
+                for (int day = 0; day < 31; day++) {
+                    boolean found = false;
+                    // for (String[] record : attendance) {
+                    //     if (record != null && students[i].equals(record[0])) {
+                    //         int time = Integer.parseInt(record[2]);
+                    //         String dayOfWeek = record[1];
+                    //         int dayOfWeekIndex = getDayIndex(dayOfWeek);
+
+                    //         if (day % 7 == dayOfWeekIndex && time == (day / 7 + 1)) {
+                    //             if (record[3].equals("HERE")) {
+                    //                 System.out.print(" 1 |");
+                    //             } else if (record[3].equals("NOT_HERE")) {
+                    //                 System.out.print("-1 |");
+                    //             }
+                    //             found = true;
+                    //             break;
+                    //         }
+                    //     }
+                    // }
+                    if (!found) {
+                        System.out.print("   |"); // Print empty slot if no match found
+                    }
+                }
+            }
+        }
+    }
+
+    public static void displaySchedule(String[][] attendance) {
+        displayFirstLine();
+        displayStudentData(attendance);
+       
+    }
+
+    public static int calculatePosition(String day, int time) {
+        // Example function to calculate position based on day and time
+        // This should be customized based on your actual data and requirements
+        int dayIndex = -1;
+        switch (day) {
+            case "MO" -> dayIndex = 0;
+            case "TU" -> dayIndex = 1;
+            case "WE" -> dayIndex = 2;
+            case "TH" -> dayIndex = 3;
+            case "FR" -> dayIndex = 4;
+            case "SA" -> dayIndex = 5;
+            case "SU" -> dayIndex = 6;
+        }
+        return dayIndex * 2 + (time / 2); // Example: Adjust based on your data
+    }
+
+    public static void sortSchedule() {
+        int n = schoolDays.length;
+
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (compareDays(schoolDays[j], schoolDays[j + 1]) > 0
+                        || (compareDays(schoolDays[j], schoolDays[j + 1]) == 0 && timeShift[j] > timeShift[j + 1])) {
+                    // Swap days
+                    String tempDay = schoolDays[j];
+                    schoolDays[j] = schoolDays[j + 1];
+                    schoolDays[j + 1] = tempDay;
+
+                    // Swap times
+                    int tempTime = timeShift[j];
+                    timeShift[j] = timeShift[j + 1];
+                    timeShift[j + 1] = tempTime;
+                }
+            }
+        }
+    }
+
+    private static int compareDays(String day1, String day2) {
+        int index1 = getDayIndex(day1);
+        int index2 = getDayIndex(day2);
+        return Integer.compare(index1, index2);
+    }
+
+    private static int getDayIndex(String day) {
+        for (int i = 0; i < weekDays.length; i++) {
+            if (weekDays[i].equals(day)) {
+                return i;
+            }
+        }
+        return -1; // Should never happen if data is valid
+    }
+    public static int dayTimeDuplicationCheck(int time, String day) {
+
+        for (int i = 0; i < 10; i++) {
+            if (timeShift[i] == time && schoolDays[i].equals(day)) {
+                return -1;
+            }
+        }
+        return 0;
+    }
+
     private static boolean spaceCheck(String string) {
         char[] temp = string.toCharArray();
-        for (int i = 0; i < string.length();i++)
-            if (temp[i] == ' ')
+        for (int i = 0; i < string.length(); i++) {
+            if (temp[i] == ' ') {
                 return true;
+            }
+        }
         return false;
     }
 
-    private static int registerStudent(Scanner in)
-    {
-        for (int i = 0; i < 10; i++) {
-            String input =  in.nextLine();
-            if (input.length() > 10 || spaceCheck(input))
-                return -1;
-                // throw new Exception("Student Name is over 10 chars or contains space");
-            if (input.equals("."))
+    private static boolean studentExist(String name) {
+        for (String student : students) {
+            if (name.equals(student)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String[][] registerPresence(Scanner in) {
+        int row = 0;
+        in.nextLine();
+        while (true) {
+            String line = in.nextLine();
+            if (line.equals(".")) {
                 break;
+            }
+
+            String name = "";
+            String time = "";
+            String day = "";
+            String status = "";
+            char[] chars = line.toCharArray();
+            int index = 0;
+            while (index < chars.length && chars[index] != ' ') {
+                name += chars[index];
+                index++;
+            }
+            index++;
+            while (index < chars.length && chars[index] != ' ') {
+                time += chars[index];
+                index++;
+            }
+            index++;
+            while (index < chars.length && chars[index] != ' ') {
+                day += chars[index];
+                index++;
+            }
+            index++;
+            while (index < chars.length) {
+                status += chars[index];
+                index++;
+            }
+            attendanceArray[row][0] = name;
+            attendanceArray[row][1] = time;
+            attendanceArray[row][2] = day;
+            attendanceArray[row][3] = status;
+            if (!studentExist(attendanceArray[row][0])) {
+                return null;
+            }
+            if (!attendanceArray[row][3].equals("HERE") && !attendanceArray[row][3].equals("NOT_HERE"))
+                return null;
+            row++;
+        }
+        String[][] cleanedArray = new String[row][];
+        int index = 0;
+
+        // Copy non-null entries to the new array
+        for (String[] entry : attendanceArray) {
+            if (entry != null) {
+                cleanedArray[index] = entry;
+                index++;
+            }
+        }
+
+        return cleanedArray;
+    }
+
+    private static int registerStudent(Scanner in) {
+        for (int i = 0; i < 10; i++) {
+            String input = in.nextLine();
+            if (input.length() > 10 || spaceCheck(input)) {
+                return -1;
+            }
+            // throw new Exception("Student Name is over 10 chars or contains space");
+            if (input.equals(".")) {
+                break;
+            }
             students[i] = input;
         }
         return 0;
     }
-    
-    private static int registerSchedule(Scanner in)
-    {
+
+    private static int registerSchedule(Scanner in) {
         for (int i = 0; i < 10; i++) {
-            String input =  in.nextLine();
-            if (input.length() > 10 || spaceCheck(input))
-                return -1;
-                // throw new Exception("Student Name is over 10 chars or contains space");
-            if (input.equals("."))
+            String line = in.next();
+            if (line.equals(".")) {
                 break;
-            students[i] = input;
+            }
+            int time;
+            // System.out.println("|"+line+"|");
+            try {
+                time = Integer.parseInt(line);
+                // System.out.println("|" + time + "|");
+            } catch (NumberFormatException e) {
+                return -1; // Invalid time input
+            }
+            if (time < 1 || time > 6) {
+                return -1;
+            }
+           
+            String day = in.next();
+            boolean validDay = false;
+            for (String weekDay : weekDays) {
+                if (day.equals(weekDay)) {
+                    validDay = true;
+                 
+                    break;
+                }
+            }
+            // System.out.println("|" + validDay + "|");
+
+            if (!validDay || dayTimeDuplicationCheck(time, day) == -1) {
+                return -1;
+            }
+            timeShift[i] = time;
+               schoolDays[i] = day;
         }
         return 0;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        String[][] attendance = null;
         try {
-       
-        if (registerStudent(scanner) == -1)
-            throw new Exception("student's Name is over 10 chars or contains space");
 
-        if (registerSchedule(scanner) == -1)
-            throw new Exception("Schedule Data is wrongly entred");
-        for (String student : students) {
-            System.out.println(student);
-        }
-        }catch (Exception e) {
+            if (registerStudent(scanner) == -1) {
+                throw new Exception("student's Name is over 10 chars or contains space");
+            }
+
+            if (registerSchedule(scanner) == -1) {
+                throw new Exception("Schedule Data is wrongly entred");
+
+            } if ((attendance = registerPresence(scanner)) == null) {
+                throw new Exception("attendance Data is entred wrong");
+            }
+            sortSchedule();
+            displaySchedule(attendance);
+
+        
+            // for (String student : students) {
+            //     System.out.println(student);
+            // }
+            // for (int i = 0; i < 10; i++) {
+            //     System.out.println(" day " + i + " = " + timeShift[i] + "  " + schoolDays[i]);
+            // }
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
