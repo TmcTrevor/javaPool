@@ -32,7 +32,7 @@ public class Program {
         
 
 		try {
-
+			// while ()
 			while (weekNumber < 18) {
                   System.out.print("-> ");
 				String week = scanner.nextLine();
@@ -40,7 +40,7 @@ public class Program {
                     //  System.out.println("here 4 ");
 					break;
 				}
-				if (!week.equals("WEEK " + (weekNumber + 1))) {
+				if (!week.equals("Week " + (weekNumber + 1))) {
 					throw new Exception("IllegalArgument");
 				}
                 //   System.out.println("here 1 ");
@@ -60,7 +60,7 @@ public class Program {
 		} catch (Exception e) {
 			String err = e.getMessage() != null ? e.getMessage() : "EOF";
 			System.err.println(err);
-scanner.close();
+			scanner.close();
 			System.exit(-1);
 		}
 		

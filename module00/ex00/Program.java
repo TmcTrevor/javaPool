@@ -1,7 +1,7 @@
 class Program {
     public static void main(String[] args) {
 
-        int number = 7526423;
+        int number = 752423;
         int numberDigit = 0;
         // if (args != null)
         //     if (args[0] != null)

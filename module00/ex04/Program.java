@@ -63,9 +63,15 @@ class Program {
             scaledFrequencies[i] = (int) (charCounts[i] * scale);
         }
 
-        int checker = 1;
-        System.out.println(charCounts[0]);
-        for (int level = 10; level > 0; level--) {
+        int checker = 0;
+
+        for (int i = 0; i < 10 && charCounts[i] == charCounts[0];i++)
+        {
+            System.out.print(charCounts[0] + " ");
+            checker++;
+        }
+        System.out.println("");
+        for (int level = 10; level > 0 && (10 -  level) < charCounts.length ; level--) {
             for (int i = 0; i < scaledFrequencies.length; i++) {
 
                 if (scaledFrequencies[i] >= level) {
@@ -103,11 +109,15 @@ class Program {
 
             // Sort the characters by their counts using selection sort
             sortNumAndChar();
-
-            displayResult();
+            if (input.equals(""))
+                System.out.println("empty String");
+            else
+                displayResult();
             scanner.close();
         }
     }
 }
 
 // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42
+
+// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWK大大大大FKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42
