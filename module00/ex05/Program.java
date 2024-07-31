@@ -5,7 +5,8 @@ import java.util.Scanner;
 class Program {
 
     // public static String[] students = {"John", "Mike"}; ///
-    public static String[] students = new String[10]; ///
+    public static String[] students = new String[10];
+    ///
     public static String[] schoolDays = new String[10]; // WE  MO FR MO SU
     // public static String[] schoolDays ={"WE", "MO"}; // WE  MO FR MO SU
     // public static int[] timeShift = {4, 5}; // 4 5 6 4 2 
@@ -13,7 +14,7 @@ class Program {
     public static String[][] attendanceArray = new String[10000][4];
     public static String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};
 
-        public static String[][] cleanAndResizeArray(String[][] array) {
+    public static String[][] cleanAndResizeArray(String[][] array) {
         // Count non-null entries
         int validCount = 0;
         for (String[] entry : array) {
@@ -36,19 +37,20 @@ class Program {
 
         return cleanedArray;
     }
-        public static void displayFirstLine() {
+
+    public static void displayFirstLine() {
         for (int i = 0; i < 15; i++) {
             System.out.print(" ");
         }
-            // System.err.println(" here 2");
-            // int t = 0;
+        // System.err.println(" here 2");
+        // int t = 0;
         for (int i = 0; i < 31; i++) {
             int dayOfWeekIndex = i % 7;
             String currentDay = weekDays[dayOfWeekIndex];
             for (int j = 0; j < schoolDays.length; j++) {
                 // System.err.println(" here 4");
                 if (schoolDays[j] != null && schoolDays[j].equals(currentDay)) {
-                    String tmp = i + 1  >= 10 ? "" : "0";
+                    String tmp = i + 1 >= 10 ? "" : "0";
                     System.out.print("  " + timeShift[j] + ":00 " + schoolDays[j] + " " + tmp + (i + 1) + "|");
                     // t++;
                 }
@@ -56,18 +58,17 @@ class Program {
             }
         }
         System.out.println("");
-        }
+    }
 
-    public static String checkAttendance(String[][] attendance, String name, String day, String hour)
-    {
+    public static String checkAttendance(String[][] attendance, String name, String day, String hour) {
         // System.out.println("test  = name = "+ name +  " day = "+ day + " hour = " + hour);
         for (String[] attendance1 : attendance) {
             // System.out.println("normal name = " + attendance1[0] + " day = " + attendance1[2] + " hour = " + attendance1[1]);
-            if (attendance1[0].equals(name) &&  attendance1[2].equals(day) && attendance1[1].equals(hour))
-            {
+            if (attendance1[0].equals(name) && attendance1[2].equals(day) && attendance1[1].equals(hour)) {
                 // System.err.println("res = "+ attendance1[3]);
-                if (attendance1[3].equals("HERE"))
+                if (attendance1[3].equals("HERE")) {
                     return "1";
+                }
                 return "-1";
             }
         }
@@ -95,26 +96,27 @@ class Program {
                         String attendancy = "";
                         // System.err.println(" here 7");
                         if (schoolDays[j] != null && schoolDays[j].equals(currentDay)) {
-                            for (int k = 0; k <= 9; k++)
+                            for (int k = 0; k <= 9; k++) {
                                 System.out.print(" ");
+                            }
                             attendancy = checkAttendance(attendance, students[i], (day + 1) + "", timeShift[j] + "");
-                            if (attendancy.equals("-1"))
-                                System.out.print(attendancy);
-                            else if (attendancy.equals("1"))
-                                System.out.print(" " + attendancy);
-                            // if (!(attendancy = checkAttendance(attendance, students[i], day, timeShift[j])).equals(""))
-                            else
+                            if (attendancy.equals("-1")) {
+                                System.out.print(attendancy); 
+                            }else if (attendancy.equals("1")) {
+                                System.out.print(" " + attendancy); 
+                            }// if (!(attendancy = checkAttendance(attendance, students[i], day, timeShift[j])).equals(""))
+                            else {
                                 System.out.print("  ");
+                            }
                             System.out.print("|");
                         }
                     }
-                 
+
                     // for (String[] record : attendance) {
                     //     if (record != null && students[i].equals(record[0])) {
                     //         int time = Integer.parseInt(record[2]);
                     //         String dayOfWeek = record[1];
                     //         int dayOfWeekIndex = getDayIndex(dayOfWeek);
-
                     //         if (day % 7 == dayOfWeekIndex && time == (day / 7 + 1)) {
                     //             if (record[3].equals("HERE")) {
                     //                 System.out.print(" 1 |");
@@ -131,7 +133,7 @@ class Program {
                     // }
                 }
             }
-            
+
             System.out.println("");
         }
     }
@@ -139,7 +141,7 @@ class Program {
     public static void displaySchedule(String[][] attendance) {
         displayFirstLine();
         displayStudentData(attendance);
-       
+
     }
 
     public static int calculatePosition(String day, int time) {
@@ -147,20 +149,26 @@ class Program {
         // This should be customized based on your actual data and requirements
         int dayIndex = -1;
         switch (day) {
-            case "MO" -> dayIndex = 0;
-            case "TU" -> dayIndex = 1;
-            case "WE" -> dayIndex = 2;
-            case "TH" -> dayIndex = 3;
-            case "FR" -> dayIndex = 4;
-            case "SA" -> dayIndex = 5;
-            case "SU" -> dayIndex = 6;
+            case "MO" ->
+                dayIndex = 0;
+            case "TU" ->
+                dayIndex = 1;
+            case "WE" ->
+                dayIndex = 2;
+            case "TH" ->
+                dayIndex = 3;
+            case "FR" ->
+                dayIndex = 4;
+            case "SA" ->
+                dayIndex = 5;
+            case "SU" ->
+                dayIndex = 6;
         }
         return dayIndex * 2 + (time / 2); // Example: Adjust based on your data
     }
 
     public static void sortSchedule() {
         int n = schoolDays.length;
-
 
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
@@ -194,6 +202,7 @@ class Program {
         }
         return -1; // Should never happen if data is valid
     }
+
     public static int dayTimeDuplicationCheck(int time, String day) {
 
         for (int i = 0; i < 10; i++) {
@@ -266,15 +275,16 @@ class Program {
                 return null;
             }
             // System.err.println(" here 11");
-            if (!attendanceArray[row][3].equals("HERE") && !attendanceArray[row][3].equals("NOT_HERE"))
+            if (!attendanceArray[row][3].equals("HERE") && !attendanceArray[row][3].equals("NOT_HERE")) {
                 return null;
+            }
             row++;
         }
         String[][] cleanedArray = new String[row][];
         // int index = 0;
 
         // Copy non-null entries to the new array
-        for (int index = 0; index < row;index++) {
+        for (int index = 0; index < row; index++) {
             if (attendanceArray[index] != null) {
                 cleanedArray[index] = attendanceArray[index];
                 // index++;
@@ -316,13 +326,13 @@ class Program {
             if (time < 1 || time > 6) {
                 return -1;
             }
-           
+
             String day = in.next();
             boolean validDay = false;
             for (String weekDay : weekDays) {
                 if (day.equals(weekDay)) {
                     validDay = true;
-                 
+
                     break;
                 }
             }
@@ -332,21 +342,21 @@ class Program {
                 return -1;
             }
             timeShift[i] = time;
-               schoolDays[i] = day;
+            schoolDays[i] = day;
         }
         return 0;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-    //    String[][] attendance = {
-    //     {"John", "5", "1", "HERE"},
-    //     {"John", "4", "24", "NOT_HERE"},
-    //     {"John", "4", "31", "HERE"},
-    //     {"Mike", "5", "1", "NOT_HERE"},
-    //     {"Mike", "5", "29", "HERE"},
-    //     {"Mike", "4", "31", "NOT_HERE"}
-    // };
+        //    String[][] attendance = {
+        //     {"John", "5", "1", "HERE"},
+        //     {"John", "4", "24", "NOT_HERE"},
+        //     {"John", "4", "31", "HERE"},
+        //     {"Mike", "5", "1", "NOT_HERE"},
+        //     {"Mike", "5", "29", "HERE"},
+        //     {"Mike", "4", "31", "NOT_HERE"}
+        // };
         String[][] attendance = null;
         try {
 
@@ -357,7 +367,8 @@ class Program {
             if (registerSchedule(scanner) == -1) {
                 throw new Exception("Schedule Data is wrongly entred");
 
-            } if ((attendance = registerPresence(scanner)) == null) {
+            }
+            if ((attendance = registerPresence(scanner)) == null) {
                 throw new Exception("attendance Data is entred wrong");
             }
             System.err.println(Arrays.toString(students));
