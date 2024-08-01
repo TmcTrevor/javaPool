@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Program {
 
 	private static void display(int grade, int week) {
-		System.out.println("Week " + week);
+		System.out.print("Week " + week);
 		while (grade > 0) {
 			System.out.print("=");
 			grade--;
