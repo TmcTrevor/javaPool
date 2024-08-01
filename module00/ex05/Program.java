@@ -351,6 +351,8 @@ class Program {
             displaySchedule(attendance);
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            System.exit(-1);
+            scanner.close();
         }
     }
 }
