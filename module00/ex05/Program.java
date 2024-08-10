@@ -8,8 +8,8 @@ class Program {
     ///
     public static String[] schoolDays = new String[10]; // WE  MO FR MO SU
     // public static String[] schoolDays ={"WE", "MO"}; // WE  MO FR MO SU
-    // public static int[] timeShift = {4, 5}; // 4 5 6 4 2 
-    public static int[] timeShift = new int[10]; // 4 5 6 4 2 
+    // public static int[] timeShift = {4, 2}; // 4 5 6 4 2
+    public static int[] timeShift = new int[10]; // 4 5 6 4 2
     public static String[][] attendanceArray = new String[10000][4];
     public static String[] weekDays = {"MO", "TU", "WE", "TH", "FR", "SA", "SU"};
 
@@ -38,20 +38,17 @@ class Program {
     }
 
     public static void displayFirstLine() {
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 11; i++) {
             System.out.print(" ");
         }
-        // System.err.println(" here 2");
-        // int t = 0;
+
         for (int i = 0; i < 31; i++) {
-            int dayOfWeekIndex = i % 7;
+            int dayOfWeekIndex = (i + 1) % 7;
             String currentDay = weekDays[dayOfWeekIndex];
             for (int j = 0; j < schoolDays.length; j++) {
-                // System.err.println(" here 4");
+
                 if (schoolDays[j] != null && schoolDays[j].equals(currentDay)) {
-                    String tmp = i + 1 >= 10 ? "" : "0";
-                    System.out.print("  " + timeShift[j] + ":00 " + schoolDays[j] + " " + tmp + (i + 1) + "|");
-                    // t++;
+                    System.out.format("%1d:00%3s%3d|" , timeShift[j], schoolDays[j], i + 1);
                 }
 
             }
@@ -59,19 +56,17 @@ class Program {
         System.out.println("");
     }
 
-    public static String checkAttendance(String[][] attendance, String name, String day, String hour) {
-        // System.out.println("test  = name = "+ name +  " day = "+ day + " hour = " + hour);
+    public static int checkAttendance(String[][] attendance, String name, String day, String hour) {
         for (String[] attendance1 : attendance) {
-            // System.out.println("normal name = " + attendance1[0] + " day = " + attendance1[2] + " hour = " + attendance1[1]);
             if (attendance1[0].equals(name) && attendance1[2].equals(day) && attendance1[1].equals(hour)) {
-                // System.err.println("res = "+ attendance1[3]);
+
                 if (attendance1[3].equals("HERE")) {
-                    return "1";
+                    return 1;
                 }
-                return "-1";
+                return -1;
             }
         }
-        return "";
+        return 0;
     }
 
     public static void displayStudentData(String[][] attendance) {
@@ -79,55 +74,28 @@ class Program {
         for (String student : students) {
             // System.err.println(" here 5");
             if (student != null) {
-                System.out.print(student);
-                for (int j = 0; j < 15 - student.length(); j++) {
-                    System.out.print(" ");
-                }
-                // int t = 0;
-                // System.out.println("t " + Arrays.toString(schoolDays));
+                // System.out.print(student);
+                System.out.format("%-10s|",student);
                 for (int day = 0; day <= 30; day++) {
-                    // System.err.println(" here 6");
-                    int dayOfWeekIndex = day % 7;
+
+                    int dayOfWeekIndex = (day + 1) % 7;
                     String currentDay = weekDays[dayOfWeekIndex];
                     for (int j = 0; j < schoolDays.length; j++) {
-                        String attendancy;
-                        // System.err.println(" here 7");
                         if (schoolDays[j] != null && schoolDays[j].equals(currentDay)) {
-                            for (int k = 0; k <= 9; k++) {
-                                System.out.print(" ");
-                            }
-                            attendancy = checkAttendance(attendance, student, (day + 1) + "", timeShift[j] + "");
+
+                            int attendancy = checkAttendance(attendance, student, (day + 1) + "", timeShift[j] + "");
                             switch (attendancy) {
-                                case "-1" -> System.out.print(attendancy);
-                                case "1" -> System.out.print(" " + attendancy);
-                                default -> System.out.print("  ");
+                                case -1 -> System.out.format("%10d|", attendancy);
+                                case 1 -> System.out.format("%10d|", attendancy);
+                                default -> System.out.format("%10s|", "");
                             }
-                            // if (!(attendancy = checkAttendance(attendance, students[i], day, timeShift[j])).equals(""))
-                            System.out.print("|");
+
                         }
                     }
-                    // for (String[] record : attendance) {
-                    //     if (record != null && students[i].equals(record[0])) {
-                    //         int time = Integer.parseInt(record[2]);
-                    //         String dayOfWeek = record[1];
-                    //         int dayOfWeekIndex = getDayIndex(dayOfWeek);
-                    //         if (day % 7 == dayOfWeekIndex && time == (day / 7 + 1)) {
-                    //             if (record[3].equals("HERE")) {
-                    //                 System.out.print(" 1 |");
-                    //             } else if (record[3].equals("NOT_HERE")) {
-                    //                 System.out.print("-1 |");
-                    //             }
-                    //             found = true;
-                    //             break;
-                    //         }
-                    //     }
-                    // }
-                    // if (!found) {
-                    //     System.out.print("   |"); // Print empty slot if no match found
-                    // }
                 }
+                System.out.println("");
             }
-            System.out.println("");
+
         }
     }
 
@@ -323,12 +291,15 @@ class Program {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         //    String[][] attendance = {
-        //     {"John", "5", "1", "HERE"},
-        //     {"John", "4", "24", "NOT_HERE"},
-        //     {"John", "4", "31", "HERE"},
-        //     {"Mike", "5", "1", "NOT_HERE"},
-        //     {"Mike", "5", "29", "HERE"},
-        //     {"Mike", "4", "31", "NOT_HERE"}
+        //     // {"John", "5", "1", "HERE"},
+        //     // {"John", "4", "24", "NOT_HERE"},
+        //     // {"John", "4", "31", "HERE"},
+        //     // {"Mike", "5", "1", "NOT_HERE"},
+        //     // {"Mike", "5", "29", "HERE"},
+        //     // {"Mike", "4", "31", "NOT_HERE"}
+        //     {"John", "4", "9", "HERE"},
+        //     {"Mike", "4", "9", "HERE"},
+        //     {"Mike", "2", "28", "NOT_HERE"}
         // };
         String[][] attendance;
         // attendance = null;
