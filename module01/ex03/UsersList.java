@@ -1,3 +1,4 @@
+package ex03;
 interface UsersList {
     public void addUser(User user);
     User getUserById(int id) throws UserNotFoundException;

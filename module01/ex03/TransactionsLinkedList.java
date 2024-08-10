@@ -1,4 +1,5 @@
-import java.util.LinkedList;
+package ex03;
+// import java.util.LinkedList;
 public class TransactionsLinkedList implements TransactionsList {
 
 	// private LinkedList<Transaction> transactions;
@@ -11,6 +12,7 @@ public class TransactionsLinkedList implements TransactionsList {
 	}
 
 
+        @Override
 	public void addTransaction(Transaction transaction)
 	{
 		// transactions.add(transaction);
@@ -18,12 +20,13 @@ public class TransactionsLinkedList implements TransactionsList {
 			this.head = transaction;
 		else
 		{
-			transaction.setNext(this.head)
+			transaction.setNext(this.head);
 			this.head = transaction;
 		}
 	}
 
-	public removeTransaction(String id)
+        @Override
+	public void removeTransaction(String id)
 	{
 		// boolean check = false;
 		// for (Transaction tr : transactions)
@@ -41,14 +44,14 @@ public class TransactionsLinkedList implements TransactionsList {
 			throw new TransactionNotFoundException("Transaction with ID " + id + " not found.");
 		}
 
-		if (head.getId().equals(id)) {
+		if (head.getIdentifier().equals(id)) {
 			head = head.getNext();
 			return;
 		}
 		Transaction node = head;
 		Transaction previousNode = null;
 		while (node != null) {
-			if (node.getId().equals(id)) {
+			if (node.getIdentifier().equals(id)) {
 				previousNode.setNext(node.getNext());
 				return;
 			}

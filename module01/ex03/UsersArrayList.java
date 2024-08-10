@@ -1,3 +1,4 @@
+package ex03;
 public class UsersArrayList implements UsersList {
 
 
@@ -7,12 +8,12 @@ public class UsersArrayList implements UsersList {
     private int  maxSize = 10;
 
 
-    
+
     public UsersArrayList() {
         users = new User[maxSize];
         size = 0;
     }
-    
+
 
 
     @Override
@@ -20,7 +21,7 @@ public class UsersArrayList implements UsersList {
 
         if (users.length == maxSize)
             resizeArray();
-        
+
         users[size++] = user;
 
         // throw new UnsupportedOperationException("Not supported yet.");
@@ -60,5 +61,5 @@ public class UsersArrayList implements UsersList {
     public int getNbrUsers() {
         return size;
     }
-        
+
 }

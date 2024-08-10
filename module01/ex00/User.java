@@ -1,4 +1,5 @@
 
+package ex00;
 public class User {
 
     private int identifier;

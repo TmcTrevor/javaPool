@@ -1,4 +1,4 @@
-
+package ex03;
 import java.util.UUID;
 
 public class Transaction {
@@ -14,6 +14,7 @@ public class Transaction {
         this.identifier = UUID.randomUUID().toString(); // Generates a unique UUID string
         this.recipient = recipient;
         this.sender = sender;
+
         this.transferCategory = transferCategory;
         if (transferCategory == TransferCategory.CREDITS && transferAmount <= 0) {
             throw new IllegalArgumentException("Transfer amount must be positive for credits.");
@@ -23,6 +24,8 @@ public class Transaction {
         }
         this.transferAmount = transferAmount;
 		this.next = null;
+		// recipient.addTransaction(this);
+		// sender.addTransaction(this);
     }
 
     // Getters and Setters

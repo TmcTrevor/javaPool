@@ -1,4 +1,4 @@
-
+package ex02;
 public class User {
 
     private final int identifier;

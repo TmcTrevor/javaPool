@@ -1,7 +1,7 @@
-
+package ex03;
 public class TransactionNotFoundException extends RuntimeException {
 
-    public UserNotFoundException(String message) {
+    public  TransactionNotFoundException(String message) {
         super(message);
     }
 }

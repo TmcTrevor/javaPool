@@ -1,4 +1,4 @@
-
+package ex03;
 public class User {
 
     private final int identifier;
@@ -14,6 +14,7 @@ public class User {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
         this.balance = balance;
+		this.transactions  = new TransactionsLinkedList();
     }
 
     // Default constructor
@@ -48,6 +49,23 @@ public class User {
         }
         this.balance = balance;
     }
+
+	public TransactionsLinkedList getTransactions()
+	{
+		return this.transactions;
+	}
+
+	public void addTransaction(Transaction transaction) {
+		try {
+		if (!transaction.getRecipient().getName().equals(this.getName()) && !transaction.getSender().getName().equals(this.getName()))
+			throw new Exception("Transaction do not belong to user");
+		this.transactions.addTransaction(transaction);
+		}
+		catch (Exception e)
+		{
+			System.err.println("ERROR : " + e.getMessage());
+		}
+	}
 
     // toString method
     @Override

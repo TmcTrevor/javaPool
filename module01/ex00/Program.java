@@ -1,3 +1,5 @@
+package ex00;
+// import ex00.User;
 
 public class Program {
 
@@ -12,7 +14,7 @@ public class Program {
 
         Transaction transaction1 = new Transaction(alice, bob, Transaction.TransferCategory.CREDITS, 200.00f);
         Transaction transaction2 = new Transaction(alice, bob, Transaction.TransferCategory.DEBITS, -150.00f);
-        
+
         System.out.println("Trasactions :");
         System.out.println(transaction1);
         System.out.println(transaction2);
