@@ -50,7 +50,7 @@ public class Program {
         }
 
 		service.removeTransaction(bob.getIdentifier(), service.retriveUserTransactions(bob.getIdentifier())[2].getIdentifier());
-		service.removeTransaction(alice.getIdentifier(), service.retriveUserTransactions(alice.getIdentifier())[4].getIdentifier());
+		service.removeTransaction(alice.getIdentifier(), service.retriveUserTransactions(alice.getIdentifier())[3].getIdentifier());
 
 
 		System.out.println("List of transaction for bob after delete");
@@ -69,7 +69,5 @@ public class Program {
 		{
 			System.out.println(transaction);
 		}
-
-
 	}
 }
