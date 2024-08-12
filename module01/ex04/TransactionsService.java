@@ -8,6 +8,8 @@ public class TransactionsService {
         this.users = users;
     }
 
+
+
 	public void addUser(User user)
 	{
 		// if (users.getUserById(user.getIdentifier()))
@@ -32,6 +34,8 @@ public class TransactionsService {
 			return 0;
 		}
 	}
+
+	
 
 	public void makeTransaction(int recipientId, int senderId, float transferAmount)
 	{
@@ -62,7 +66,6 @@ public class TransactionsService {
 
 	private Transaction[] getAllTransactions() {
 		Transaction[] allTransactions = new Transaction[0]; // Assuming a max of 100 transactions for simplicity
-
         // Collect all transactions from all users
         for (int i = 0; i < users.getNbrUsers(); i++) {
             User user = users.getUserById(i + 1); // Assuming user IDs start from 1
@@ -76,6 +79,7 @@ public class TransactionsService {
             }
 			allTransactions = tmp;
         }
+
 		return allTransactions;
 	}
 
@@ -107,6 +111,7 @@ public class TransactionsService {
                 unpairedTransactions[unpairedCount++] = allTransactions[i];
             }
         }
+
 
         // Return the unpaired transactions as an array with exact size
         Transaction[] result = new Transaction[unpairedCount];
