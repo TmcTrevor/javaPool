@@ -19,12 +19,8 @@ public class FileProcessor {
 				String wholeFIle = "";
 				int fullBytesRead = bytesRead;
 
-				// Loop to read the entire file
 				while (bytesRead != -1) {
-					// Convert the byte array to a String and print it
 					wholeFIle += new String(buffer, 0, bytesRead);
-
-					// Read the next chunk of data
 					bytesRead = file.read(buffer);
 					fullBytesRead += bytesRead;
 				}
@@ -127,12 +123,7 @@ public class FileProcessor {
 			try {
 			byte[] buffer = new byte[nbBytes];
 			int bytesRead = file.read(buffer);
-			// System.out.println(new String(buffer, 0, bytesRead));
 			String test =  new String(buffer, 0, bytesRead);
-			// char[] characters = test.toCharArray();
-			// System.out.println(" hhhh " + asciiToHex(test));
-			// for (int i = 0; i < characters.length; i++)
-			// 	System.out.println("int = " +  characters[i] + " char " + charToHex(characters[i]));
 			return test;
 			} catch (IOException e)
 			{
@@ -180,14 +171,12 @@ public class FileProcessor {
 
 
 		static public String byteToHex(byte b) {
-			// Returns hex String representation of byte b
 			char hexDigit[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8',
 					'9', 'a', 'b', 'c', 'd', 'e', 'f' };
 			char[] array = { hexDigit[(b >> 4) & 0x0f], hexDigit[b & 0x0f] };
 			return new String(array);
 		}
 		public static String charToHex(char c) {
-			// Returns hex String representation of char c
 			byte hi = (byte) (c >>> 88);
 			byte lo = (byte) (c & 0xff);
 			return byteToHex(hi) + byteToHex(lo);
