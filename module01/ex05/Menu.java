@@ -26,8 +26,8 @@ public class Menu {
                 System.out.println("3. Perform A Transfer");
                 System.out.println("4. View all transactions for a specific user");
                 if (isDevMode) {
-                    System.out.println("5. Remove Transaction by User ID");
-                    System.out.println("6. Validate All Transactions");
+                    System.out.println("5. DEV - remove a transfer by ID");
+                    System.out.println("6. DEV - check transfer validity");
                     System.out.println("7. Finish execution");
                 }
                 else
@@ -58,6 +58,9 @@ public class Menu {
 					System.out.println("---------------------------------------------------------");
                 } catch (InputMismatchException e) {
                     System.out.println("Please enter a valid number.");
+					choice = -1;
+					scanner.nextLine();
+					// scanner.close();
                 } catch (Exception e) {
                     System.out.println("An error occurred: " + e.getMessage());
                 }
@@ -76,10 +79,16 @@ public class Menu {
 			User user = new User(name, balance);
 			service.addUser(user);
 			System.out.println("\t\tUser with id = "+ user.getIdentifier() + " is added");
-		} catch (Exception e)
+		}
+	catch (InputMismatchException e) {
+        System.err.println("\tError: Please enter a valid number for the balance.");
+        scanner.nextLine(); // Consume the invalid input
+    }
+		catch (Exception e)
 		{
 
 			System.err.println("\tError On user add : " + e.getMessage());
+
 		}
 	}
 
@@ -87,6 +96,7 @@ public class Menu {
 	{
 		try {
 			System.out.println("\tEnter User ID");
+			System.out.print("\t-> ");
 			int id = scanner.nextInt();
 			System.out.println("\t" + service.getUserById(id).getName() + " - " +service.retriveBalance(id));
 
@@ -99,6 +109,7 @@ public class Menu {
         try {
 
             System.out.println("\tEnter a sender ID, a recipient ID, and a transfer amount");
+			System.out.print("\t-> ");
             int senderId = scanner.nextInt();
             int recipientId = scanner.nextInt();
             float amount = scanner.nextFloat();
@@ -112,7 +123,9 @@ public class Menu {
     }
 
     private void viewTransactions(Scanner scanner) {
+		try {
 		System.out.println("\tEnter a user ID");
+		System.out.print("\t-> ");
 		int userId = scanner.nextInt();
         Transaction[]  userTransaction = service.retriveUserTransactions(userId);
 
@@ -120,6 +133,12 @@ public class Menu {
 		{
 			System.out.println(transaction);
 		}
+		if (userTransaction.length == 0)
+			System.out.println("User Have No TRANSACTION");
+	} catch (Exception e)
+	{
+		System.err.println("Error on view Transactions : " + e.getMessage());
+	}
 	}
 
     private void removeTransactionByUserId(Scanner scanner) {
@@ -128,8 +147,8 @@ public class Menu {
             System.out.print("-> ");
             int userId = scanner.nextInt();
             String transactionId = scanner.next();
-            service.removeTransaction(userId, transactionId);
 			Transaction transaction = service.getTransactionById(userId, transactionId);
+            service.removeTransaction(userId, transactionId);
 			String toFrom;
 			String name;
 			int id;

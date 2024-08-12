@@ -8,11 +8,11 @@ public class User {
 
     // Constructor
     public User(String name, float balance) {
-        this.identifier = UserIdsGenerator.getInstance().generateId();
-        this.name = name;
-        if (balance < 0) {
+		if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative.");
         }
+        this.identifier = UserIdsGenerator.getInstance().generateId();
+        this.name = name;
         this.balance = balance;
 		this.transactions  = new TransactionsLinkedList();
     }
