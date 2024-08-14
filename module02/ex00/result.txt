@@ -1,0 +1,3 @@
+JPEG
+GIF
+PNG
