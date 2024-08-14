@@ -12,14 +12,12 @@ public class Program {
         return sum;
     }
 
-    static boolean isPrime(int number) {
-        if (number < 2) {
-            return false;
-        }
-        int sqrtNumber = (int) Math.sqrt(number);
-        for (int i = 2; i <= sqrtNumber; i++) {
+	private static boolean  isPrime(int number) {
+		if (number < 2) {
+			return false;
+		}
+        for (int i = 3; i * i <= number; i++) {
             if (number % i == 0) {
-                // System.out.println("false " + (i - 1));
                 return false;
             }
         }
@@ -31,7 +29,6 @@ public class Program {
         int count = 0;
         try {
             while (true) {
-                System.out.print("-> ");
                 if (!scanner.hasNextInt()) {
                     throw new Exception("IllegalArgument");
                 }

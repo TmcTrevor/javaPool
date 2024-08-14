@@ -4,13 +4,17 @@ import java.util.Scanner;
 class Program {
 
     private static int isPrime(int number) {
-        int sqrtNumber = (int) Math.sqrt(number);
+        int sqrtNumber = 0; 
 
-        for (int i = 2; i <= sqrtNumber; i++) {
+		if (number <= 3)
+			sqrtNumber = 1;
+
+        for (int i = 3; i * i <= number; i++) {
             if (number % i == 0) {
                 System.out.println("false " + (i - 1));
                 return 0;
             }
+			sqrtNumber = i;
         }
 
         System.out.println("true " + sqrtNumber);
