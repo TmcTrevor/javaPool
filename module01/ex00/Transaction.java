@@ -75,13 +75,12 @@ public class Transaction {
     // toString method
     @Override
     public String toString() {
-        return "Transaction{"
-                + "identifier='" + identifier + '\''
-                + ", recipient=" + recipient
-                + ", sender=" + sender
-                + ", transferCategory=" + transferCategory
-                + ", transferAmount=" + transferAmount
-                + '}';
+        return "Transaction : { \n \tidentifier='" + identifier + '\''
+                + "\n \t recipient=" + recipient
+                + "\n \t sender=" + sender
+                + "\n \t transferCategory=" + transferCategory
+                + "\n \t transferAmount=" + transferAmount
+                + "\n }";
     }
 
     // Enum for TransferCategory
