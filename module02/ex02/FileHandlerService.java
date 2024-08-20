@@ -6,13 +6,13 @@ import java.util.Scanner;
 public class FileHandlerService {
 
 	private File workDir;
-	private String initialPath;
+	// private String initialPath;
 	private String currentPath;
 
 	public FileHandlerService(String path)
 	{
 		workDir = new File(path);
-		this.initialPath = path;
+		// this.initialPath = path;
 		this.currentPath = path;
 		System.out.println(workDir.getAbsolutePath());
 
@@ -29,7 +29,12 @@ public class FileHandlerService {
 			switch(commandWithArgs[0])
 			{
 				case "ls" -> ft_ls();
-				case "cd" -> ft_cd(commandWithArgs[1]);
+				case "cd" -> {
+					if (commandWithArgs.length == 2)
+						ft_cd(commandWithArgs[1]);
+					else
+						System.err.println("cd : command need one argument");
+				}
 				case "pwd" -> ft_pwd();
 				case "mv" -> ft_mv(commandWithArgs);
 				case "exit" -> System.exit(0);
@@ -42,7 +47,8 @@ public class FileHandlerService {
 
 	public String ft_pwd()
 	{
-		System.out.println(currentPath);
+		// System.out.println(currentPath);
+		System.out.println(workDir.getAbsolutePath());
 		return currentPath;
 	}
 
@@ -50,7 +56,9 @@ public class FileHandlerService {
         // Import the File class
 
 
-		String[] test = workDir.list();
+		try {
+			String[] test = workDir.list();
+
 		for (String s : test)
 		{
 			// System.err.println(currentPath + "/" + s);
@@ -58,6 +66,11 @@ public class FileHandlerService {
 
 			System.out.println(s + " " + tmp.length() + " KB");
 		}
+
+	} catch (Exception e)
+	{
+		System.err.println("ls : "+ e.getMessage());
+	}
 
     }
 
@@ -70,8 +83,15 @@ public class FileHandlerService {
 		}
 		else
 		{
-			this.currentPath = currentPath + "/" + folderName;
-			workDir = newFile;
+			if (!newFile.isDirectory())
+				System.err.println("cd: not a directory " + folderName);
+			else if (newFile.canExecute())
+			{
+				this.currentPath = currentPath + "/" + folderName;
+				workDir = newFile;
+			}
+			else
+			System.err.println("cd: permision Denied: " + folderName);
 		}
 
 	}

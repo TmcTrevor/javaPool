@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class FileProcessor {
 
@@ -84,7 +85,7 @@ public class FileProcessor {
         return null;  // Return null if the value is not found
     }
 
-    public static String findFOrmat(Map<String, String> map, String value) {
+    public static String  findFOrmat(Map<String, String> map, String value) {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getValue().contains(value) || value.contains(entry.getValue())) {
                 return entry.getKey();
@@ -101,11 +102,17 @@ public class FileProcessor {
             try (FileOutputStream fos = new FileOutputStream("./result.txt", true)) {
                 byte[] f8Bytes = readNbBytes1(file, 8);
                 String hexFormat = asciiToHex(f8Bytes);
-                format = findFOrmat(formatNcode, hexFormat) + "\n";
-                System.out.println("PROCESSED");
-                // resultFormats[size++] = format;
-                byte[] contentBytes = format.getBytes();
-                fos.write(contentBytes);
+                format = findFOrmat(formatNcode, hexFormat);
+                if (format != null)
+                {
+                    System.out.println("PROCESSED");
+                    format += "\n";
+                    byte[] contentBytes = format.getBytes();
+                    fos.write(contentBytes);
+                    return format;
+                }
+                else
+                    System.err.println("Format Not recognized");
             }
             return format;
         } catch (FileNotFoundException e) {

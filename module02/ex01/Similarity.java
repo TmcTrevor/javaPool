@@ -42,7 +42,6 @@ public class Similarity {
     }
 
     private String[] fillSplits(String[] original, String[] newChunks) {
-		System.err.println("size or" + original.length);
         String[] tmp = new String[original.length + newChunks.length];
         System.arraycopy(original, 0, tmp, 0, original.length);
         System.arraycopy(newChunks, 0, tmp, original.length, newChunks.length);
@@ -54,7 +53,6 @@ public class Similarity {
 		String data1;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             while ((data1 = bufferedReader.readLine()) != null) {
-				System.err.println("data1 = " + data1);
                 if (data1 != null) {
                     data = fillSplits(data, data1.split(" "));
 					// System.err.println("data = " + data);
@@ -104,7 +102,12 @@ public class Similarity {
 
 	public double calculateSimilarity()
 	{
-		return calculateNumerator() / calculateDenominator();
+		double denominator = calculateDenominator();
+		double nominator = calculateNumerator();
+		if (denominator == 0)
+			return 0;
+
+		return nominator / denominator;
 	}
 
 
@@ -115,7 +118,7 @@ public class Similarity {
             for (String word : dict) {
                 bufferedWriter.write(word + " ");
             }
-            System.out.println("File copied successfully using BufferedReader and BufferedWriter.");
+            // System.out.println("File copied successfully using BufferedReader and BufferedWriter.");
         } catch (IOException e) {
 
         }
@@ -131,28 +134,27 @@ public class Similarity {
 		Arrays.sort(dict, String.CASE_INSENSITIVE_ORDER);
 		writeInFile();
 
-		 for (String d1 : data2Splited) {
-            System.out.println(d1);/// write in file dict
-
-        }
-		System.out.println("-----------");
-		vector1 = fillVector(data1Splited);
-		vector2 = fillVector(data2Splited);
-		for (int d1 : vector1)
-            System.out.print(d1 + " ");/// write in file dict
-
-		System.out.println("");
-		for (int d2 : vector2) {
-            System.out.print(d2 + " ");/// write in file dict
-		}
-		System.out.println("");
-
-		double res = calculateSimilarity();
-		System.out.println("sim = " + res);
-        // for (String d1 : dict) {
+		//  for (String d1 : data2Splited) {
         //     System.out.println(d1);/// write in file dict
 
         // }
+		// System.out.println("-----------");
+		vector1 = fillVector(data1Splited);
+		vector2 = fillVector(data2Splited);
+		// for (int d1 : vector1)
+        //     System.out.print(d1 + " ");/// write in file dict
+
+		// System.out.println("");
+		// for (int d2 : vector2) {
+        //     System.out.print(d2 + " ");/// write in file dict
+		// }
+		// System.out.println("");
+
+		double res = calculateSimilarity();
+		double formattedNumber = (int)(res * 100) / 100.0;
+
+		System.out.println("similarity = " + formattedNumber);
+
 	}
 
 	public Similarity()
