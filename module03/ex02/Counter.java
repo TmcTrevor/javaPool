@@ -7,7 +7,7 @@ public class Counter {
         counter = 0;
     }
 
-    public void add(int newNumber)
+    public  synchronized void add(int newNumber)
     {
         counter += newNumber;
     }
