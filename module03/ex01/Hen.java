@@ -21,7 +21,7 @@ package module03.ex01;
 // 				// TODO Auto-generated catch block
 // 				e.printStackTrace();
 // 			}
-			
+
 // 	  	}
 // 	}
 
@@ -52,7 +52,7 @@ package module03.ex01;
 // 				// TODO Auto-generated catch block
 // 				e.printStackTrace();
 // 			}
-			
+
 // 	  	}
 // 	}
 
@@ -90,12 +90,13 @@ public class Hen implements Runnable {
 					queue.notify();
 					if (i < count - 1)
 						queue.wait();
+					// System.err.println("teee");
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 	  	}
 	}
 
