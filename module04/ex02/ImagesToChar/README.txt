@@ -1,18 +1,30 @@
-# to clean
-rm -rf target
 
-# to compile
-javac -d ./target/fr.42.printer ./src/java/fr.42.printer/*/*.java
 
-# to copy resources
-mkdir -p target/resources
-cp -r resources/* target/resources/
+1 - make sure you are inside ImagesTochar folder
+2 - you can execute script.sh file or  follow the next steps
 
-# to create jar file
-jar cfm ./target/images-to-chars-printer.jar ./src/manifest.mf -C target/fr.42.printer .
+	1 - # to clean
+		rm -rf target
 
-# to run jar file
-java -jar ./target/images-to-chars-printer.jar char1 char2 path_to_image
+	2 - # to compile
+		javac -d ./target/fr.42.printer ./src/java/fr.42.printer/*/*.java
 
-# example
-java -jar ./target/images-to-chars-printer.jar . 0  ./target/resources/it.bmp
+	3 - # Copy the compiled classes of the libraries to the target
+		(cd target && jar xf ../lib/jcommander-*.**.jar)
+		(cd target && jar xf ../lib/JCDP-*.*.*.jar || jar xf ../lib/JCOLOR-*.*.*.jar)
+
+	4 - # to copy resources
+		cp -r ./src/resources ./target/
+
+	5 - # to create jar file
+		jar cfm ./target/images-to-chars-printer.jar ./src/manifest.mf -C target/ .
+
+	6 - # to run jar file
+		java -jar ./target/images-to-chars-printer.jar --options
+			  Options:
+  					* --black, -b   color to switch with black
+  					* --image, -i   Path to the image
+  					* --white, -w   color to switch with white
+
+	# example
+		java -jar target/images-to-chars-printer.jar --white=RED --black=GREEN  -i=target/resources/it.bmp
