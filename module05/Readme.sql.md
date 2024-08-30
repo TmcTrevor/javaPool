@@ -96,6 +96,18 @@ DROP TABLE
 > DROP TABLE table_name;
 
 CREATE INDEX
+>	CREATE INDEX idx_user_login ON users(login);
+	CREATE INDEX idx_chatroom_name ON chatrooms(chatroom_name);
+	CREATE INDEX idx_message_datetime ON messages(message_datetime);
+
+>>>>	**Indexing a column imporves the performance of locating the matching values**
+**Efficent Sorting**
+```SELECT * FROM Orders ORDER BY order_date;```
+If order_date is indexed, the database can quickly return the rows in order because the index is already sorted.
+
+
+
+
 DROP INDEX
 
 
