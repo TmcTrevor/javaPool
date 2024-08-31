@@ -7,6 +7,13 @@
     <groupId>com.mycompany.app</groupId>
     <artifactId>my-module</artifactId>
     <version>1.0.0</version>
+<dependencies>
+    <dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.5.0</version>
+</dependency>
+</dependencies>
 
     <!-- Add dependencies, build plugins, etc., here -->
 </project>
