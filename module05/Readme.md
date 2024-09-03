@@ -195,7 +195,7 @@ The provided Maven configuration block is used to package your Java application 
 implementation Attribute
 > Value: org.apache.maven.plugins.shade.resource.ManifestResourceTransformer
 > Meaning: The implementation attribute specifies the fully qualified class name of the transformer implementation. The ManifestResourceTransformer is used to modify the manifest file of the JAR. This is useful when you want to add or alter entries in the manifest, such as specifying the Main-Class attribute that tells Java which class contains the main method to execute when running the JAR.
-# <mainClass> Element
+# "<mainClass>" Element
  > Value: fr._42.chat.app.Main
 > Meaning: The <mainClass> element within the ManifestResourceTransformer specifies the fully qualified name of the class that contains the public static void main(String[] args) method. This class will be set as the Main-Class entry in the JAR’s manifest file, which tells the JVM which class to execute when running the JAR with the java -jar command. You should replace fr._42.chat.app.Main with the actual main class of your application.
 
