@@ -148,56 +148,56 @@ The provided Maven configuration block is used to package your Java application 
 - implementation: Specifies the implementation class for the transformer. Here, it is set to ManifestResourceTransformer,       which allows you to modify the manifest file in the shaded JAR.
 - mainClass: Defines the fully qualified name of the main class to be set in the JAR's manifest file. Replace fr._42.chat.app.Main with the actual class that contains the public static void main(String[] args) method in your application.
 
-# <build> Element
+# build Element
 
-> The <build> element in a Maven POM (Project Object Model) file is used to define the build configuration of your project. This includes plugins, resources, directories, and other elements that are essential for the build process.
+> The build element in a Maven POM (Project Object Model) file is used to define the build configuration of your project. This includes plugins, resources, directories, and other elements that are essential for the build process.
 
-# <plugins> Element
-> The <plugins> element is used to define a list of Maven plugins that are required for the build process. Plugins can perform a variety of tasks, such as compiling code, running tests, packaging binaries, generating documentation, and more.
+# plugins Element
+> The plugins element is used to define a list of Maven plugins that are required for the build process. Plugins can perform a variety of tasks, such as compiling code, running tests, packaging binaries, generating documentation, and more.
 
-# <plugin> Element
-> The <plugin> element within the <plugins> section defines a specific plugin that Maven will use during the build process. This includes specifying the plugin’s group ID, artifact ID, version, and configuration details.
+# plugin Element
+> The plugin element within the plugins> section defines a specific plugin that Maven will use during the build process. This includes specifying the plugin’s group ID, artifact ID, version, and configuration details.
 
- - **<groupId> Element**
+ - **groupId Element**
 > Value: org.apache.maven.plugins
-> Meaning: The <groupId> specifies the group that the plugin belongs to. This is often a domain name in reverse, as is common in Java packages. In this case, org.apache.maven.plugins indicates that the plugin is part of the official Maven Plugins group maintained by the Apache Maven project.
+> Meaning: The groupId> specifies the group that the plugin belongs to. This is often a domain name in reverse, as is common in Java packages. In this case, org.apache.maven.plugins indicates that the plugin is part of the official Maven Plugins group maintained by the Apache Maven project.
 
-- **<artifactId> Element**
+- **artifactId Element**
 > Value: maven-shade-plugin
-> Meaning: The <artifactId> is the unique identifier for the plugin within the specified group. Here, maven-shade-plugin refers to the Maven Shade Plugin, which is used to create an uber-JAR (a single JAR file containing all dependencies).
-- **<version> Element**
+> Meaning: The artifactId> is the unique identifier for the plugin within the specified group. Here, maven-shade-plugin refers to the Maven Shade Plugin, which is used to create an uber-JAR (a single JAR file containing all dependencies).
+- **version Element**
     Value: 3.2.4
-> Meaning: The <version> specifies the exact version of the plugin to be used. In this case, version 3.2.4 of the Maven Shade Plugin is being used. Specifying the version is important for ensuring consistent builds, as the behavior of plugins may change between versions.
+> Meaning: The version> specifies the exact version of the plugin to be used. In this case, version 3.2.4 of the Maven Shade Plugin is being used. Specifying the version is important for ensuring consistent builds, as the behavior of plugins may change between versions.
 
-# <executions> Element
-> The <executions> element is used to specify when and how the plugin should be executed during the Maven build lifecycle. You can define multiple executions with different configurations if needed.
-# <execution> Element
-> The <execution> element defines a specific execution configuration for the plugin. This includes specifying the build phase, goals, and any necessary configuration for that execution.
-- **<phase> Element**
+# executions Element
+> The executions element is used to specify when and how the plugin should be executed during the Maven build lifecycle. You can define multiple executions with different configurations if needed.
+# execution Element
+> The execution element defines a specific execution configuration for the plugin. This includes specifying the build phase, goals, and any necessary configuration for that execution.
+- **phase Element**
 > Value: package
-> Meaning: The <phase> element specifies the build phase in which the plugin’s goals should be executed. Maven’s build lifecycle has predefined phases such as validate, compile, test, package, verify, install, and deploy. The package phase is where the project is packaged into a distributable format, such as a JAR or WAR file. By specifying package, you’re telling Maven to run the plugin during this phase.
-- **<goals> Element**
-> The <goals> element defines the specific goals (tasks) that the plugin should execute during the specified phase.
-<goal> Element
+> Meaning: The phase element specifies the build phase in which the plugin’s goals should be executed. Maven’s build lifecycle has predefined phases such as validate, compile, test, package, verify, install, and deploy. The package phase is where the project is packaged into a distributable format, such as a JAR or WAR file. By specifying package, you’re telling Maven to run the plugin during this phase.
+- **goals Element**
+> The goals element defines the specific goals (tasks) that the plugin should execute during the specified phase.
+goal Element
 
 > Value: shade
 
-> Meaning: The <goal> element specifies the specific task the plugin should perform. In this case, shade is the goal provided by the Maven Shade Plugin. The shade goal creates a shaded (or uber) JAR that includes not only your project’s compiled code but also all of its dependencies. This is particularly useful when you need a standalone executable JAR.
-# <configuration> Element
-> The <configuration> element is where you specify additional configuration options for the plugin’s execution. This can include settings specific to the plugin, such as which files to include/exclude, how to merge resources, and so on.
+> Meaning: The goal element specifies the specific task the plugin should perform. In this case, shade is the goal provided by the Maven Shade Plugin. The shade goal creates a shaded (or uber) JAR that includes not only your project’s compiled code but also all of its dependencies. This is particularly useful when you need a standalone executable JAR.
+# configuration Element
+> The configuration element is where you specify additional configuration options for the plugin’s execution. This can include settings specific to the plugin, such as which files to include/exclude, how to merge resources, and so on.
 
-# <transformers> Element
+# transformers Element
 
- > The <transformers> element is used to specify resource transformers. Transformers are responsible for modifying the resources that go into the shaded JAR, such as merging properties files, altering manifests, etc.
-# <transformer> Element
+ > The transformers element is used to specify resource transformers. Transformers are responsible for modifying the resources that go into the shaded JAR, such as merging properties files, altering manifests, etc.
+# transformer Element
 
-> The <transformer> element defines a specific transformer to be applied. In this context, the transformer modifies the manifest file of the resulting JAR.
+> The transformer element defines a specific transformer to be applied. In this context, the transformer modifies the manifest file of the resulting JAR.
 implementation Attribute
 > Value: org.apache.maven.plugins.shade.resource.ManifestResourceTransformer
 > Meaning: The implementation attribute specifies the fully qualified class name of the transformer implementation. The ManifestResourceTransformer is used to modify the manifest file of the JAR. This is useful when you want to add or alter entries in the manifest, such as specifying the Main-Class attribute that tells Java which class contains the main method to execute when running the JAR.
-# "<mainClass>" Element
+# mainClass Element
  > Value: fr._42.chat.app.Main
-> Meaning: The <mainClass> element within the ManifestResourceTransformer specifies the fully qualified name of the class that contains the public static void main(String[] args) method. This class will be set as the Main-Class entry in the JAR’s manifest file, which tells the JVM which class to execute when running the JAR with the java -jar command. You should replace fr._42.chat.app.Main with the actual main class of your application.
+> Meaning: The mainClass element within the ManifestResourceTransformer specifies the fully qualified name of the class that contains the public static void main(String[] args) method. This class will be set as the Main-Class entry in the JAR’s manifest file, which tells the JVM which class to execute when running the JAR with the java -jar command. You should replace fr._42.chat.app.Main with the actual main class of your application.
 
 # Summary
 > This configuration block is a critical part of your Maven build process if you want to package your application into an executable JAR file that includes all dependencies. By using the Maven Shade Plugin, you ensure that the resulting JAR file is standalone, meaning it can be executed on any machine with a JVM installed, without needing to manually manage dependencies.
