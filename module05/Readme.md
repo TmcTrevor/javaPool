@@ -33,43 +33,43 @@ To connect a Java application to a database using JDBC, follow these five essent
 
 The first step is to register the database driver with the JDBC DriverManager. This is typically done using the `Class.forName()` method, which dynamically loads the driver class.
 
-\`\`\`java
+```java
 Class.forName("oracle.jdbc.driver.OracleDriver");
-\`\`\`
+```
 
 For example, to register the PostgreSQL driver:
 
-\`\`\`java
+```java
 Class.forName("org.postgresql.Driver");
-\`\`\`
+```
 
 ### **2. Create a Connection**
 
 Once the driver is registered, you can establish a connection to the database using the `DriverManager.getConnection()` method. This method requires a URL that specifies the database location, along with a username and password.
 
-\`\`\`java
+```java
 Connection connection = DriverManager.getConnection(
     "jdbc:postgresql://localhost:5432/your_database", 
     "your_username", 
     "your_password"
 );
-\`\`\`
+```
 
 ### **3. Create a Statement**
 
 To execute SQL queries, you need to create a `Statement` or `PreparedStatement` object using the `Connection` object.
 
-\`\`\`java
+```java
 Statement statement = connection.createStatement();
-\`\`\`
+```
 
 Or, if you're using a `PreparedStatement`:
 
-\`\`\`java
+```java
 String query = "SELECT * FROM Users WHERE username = ?";
 PreparedStatement preparedStatement = connection.prepareStatement(query);
 preparedStatement.setString(1, "admin");
-\`\`\`
+```
 
 ### **4. Execute Queries**
 
@@ -77,26 +77,22 @@ With the `Statement` or `PreparedStatement` object, you can now execute SQL quer
 
 For a `SELECT` query:
 
-\`\`\`java
+```java
 ResultSet resultSet = statement.executeQuery("SELECT * FROM Users");
-\`\`\`
+```
 
 For an `INSERT`, `UPDATE`, or `DELETE` query:
 
-\`\`\`java
+```java
 int rowsAffected = statement.executeUpdate("INSERT INTO Users (username, password) VALUES ('newuser', 'password123')");
-\`\`\`
+```
 
 ### **5. Close the Connection**
 
 Finally, it's essential to close the connection to free up database resources. Make sure to close the `ResultSet`, `Statement`, and `Connection` objects when done:
 
-\`\`\`java
+```java
 resultSet.close();
 statement.close();
 connection.close();
-\`\`\`
-
----
-
-This README provides a basic overview of how to use JDBC to connect to a database in Java. You can expand on this with additional details or examples as needed for your project.
+```
