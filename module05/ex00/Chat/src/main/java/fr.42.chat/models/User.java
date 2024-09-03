@@ -1,5 +1,6 @@
 package fr._42.chat.models;
 
+import java.util.List;
 public class User {
     private int id;
     private String login;
@@ -46,10 +47,18 @@ public class User {
         }
         return false;
     }
+    // @Override
+    // public int hashCode() {
+    //     return Object.hash(this.id, login);
+    // }
+
     @Override
     public int hashCode() {
-        return Object.hash(id, login);
+        int result = id;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        return result;
     }
+
 
     @Override
     public String toString() {

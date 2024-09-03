@@ -1,5 +1,10 @@
 package fr._42.chat.models;
 
+import java.util.Date;
+
+
+
+
 public class Message {
     private int id;
     private String text;
@@ -46,10 +51,18 @@ public class Message {
         return false;
     }
     
+    // @Override
+    // public int hashCode() {
+    //     return Object.hash(id, text, author, room, datetime);
+    // }
     @Override
     public int hashCode() {
-        return Object.hash(id, text, author, room, datetime);
+        int result = id;
+        result = 31 * author.hashCode();
+        result = 31 * room.hashCode();
+        return result;
     }
+
 
     @Override
     public String toString() {

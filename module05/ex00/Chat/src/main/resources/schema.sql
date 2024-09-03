@@ -1,37 +1,40 @@
--- Create the database
-CREATE DATABASE IF NOT EXISTS testDB;
+-- Create the database (PostgreSQL does not support "IF NOT EXISTS" with CREATE DATABASE)
+-- So you should check manually if the database exists before running this script
+-- Alternatively, you can use a bash script to check and create the database if needed.
+CREATE DATABASE testdb;
+-- Connect to the correct database
+\c testdb
 
--- Select the database
-USE testDB;
-
-CREATE TABLE IF NOT EXISTS User {
-	id INT UNIQUE AUTO_INCREMENT PRIMARY KEY,
-	login VARCHAR(50) UNIQUE NOT NULL,
-	Password VARCHAR(255) NOT NULL,
-	CreatedRooms JSONB DEFAULT '[]',  -- JSONB array to store IDs of rooms created by the user
+-- Create the User table
+CREATE TABLE IF NOT EXISTS "User" (
+    id SERIAL PRIMARY KEY,
+    login VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    CreatedRooms JSONB DEFAULT '[]',  -- JSONB array to store IDs of rooms created by the user
     socializingRooms JSONB DEFAULT '[]'  -- JSONB array to store IDs of chatrooms where the user socializes
-}
+);
 
-CREATE TABLE IF NOT EXISTS Chatroom {
-	id INT UNIQUE AUTO_INCREMENT PRIMARY KEY,
-	roomName VARCHAR(50) NOT NULL,
-	owner INT NOT NULL,
-	messages JSONB DEFAULT '[]',
-	FOREIGN KEY (owner) REFERENCES User(id) ON DELETE CASCADE,
-}
+-- Create the Chatroom table
+CREATE TABLE IF NOT EXISTS "Chatroom" (
+    id SERIAL PRIMARY KEY,
+    roomName  VARCHAR(50) NOT NULL,
+    owner INT NOT NULL,
+    messages JSONB DEFAULT '[]',
+    FOREIGN KEY (owner) REFERENCES "User"(id) ON DELETE CASCADE
+);
 
-CREATE TABLE IF NOT EXISTS Message {
-	id INT UNIQUE AUTO_INCREMENT PRIMARY KEY,
-	author INT NOT NULL,
-	room	INT NOT NULL,
-	text TEXT NOT NULL,
+-- Create the Message table
+CREATE TABLE IF NOT EXISTS "Message" (
+    id SERIAL PRIMARY KEY,
+    author INT NOT NULL,
+    room INT NOT NULL,
+    text TEXT NOT NULL,
     datetime TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (author) REFERENCES "User"(id) ON DELETE CASCADE,
+    FOREIGN KEY (room) REFERENCES "Chatroom"(id) ON DELETE CASCADE
+);
 
-	FOREIGN KEY (author) REFERENCES User(id) ON DELETE CASCADE,
-	FOREIGN KEY (room) REFERENCES Chatroom(id) ON DELETE CASCADE,
-
-}
-
-CREATE INDEX idx_user_login ON users(login);
-CREATE INDEX idx_chatroom_name ON chatrooms(chatroom_name);
-CREATE INDEX idx_message_datetime ON messages(message_datetime);
+-- Create indexes
+CREATE INDEX IF NOT EXISTS idx_user_login ON "User"(login);
+CREATE INDEX IF NOT EXISTS idx_chatroom_name ON "Chatroom"(roomName);
+CREATE INDEX IF NOT EXISTS idx_message_datetime ON "Message"(datetime);
