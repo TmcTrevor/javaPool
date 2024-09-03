@@ -1,4 +1,4 @@
-package fr._42.chat.models;
+package fr._42.chat.app;
 // This code is for establishing connection with MySQL
 // database and retrieving data
 // from db Java Database connectivity
