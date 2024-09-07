@@ -203,3 +203,38 @@ implementation Attribute
 > This configuration block is a critical part of your Maven build process if you want to package your application into an executable JAR file that includes all dependencies. By using the Maven Shade Plugin, you ensure that the resulting JAR file is standalone, meaning it can be executed on any machine with a JVM installed, without needing to manually manage dependencies.
 
 > The configuration also specifies which class should be executed as the entry point of your application, making it possible to run your JAR with a simple java -jar command.
+
+# JDBC DIRECT VS HikariCP
+> in my main setup for ex00 there will be no main key diff because : 
+the connection is opened once at the beginning with 
+```java 
+    DriverManager.getConnection().
+```
+It's used to create a ```Statement``` object.
+The same Statement (and thus the connection) is reused in all queries (```listUsers```, ```listChatrooms```, and ```listMessages```).
+Finally, the connection is closed at the end of the program.
+So, the connection is opened once and reused for all the operations before being closed at the end.
+
+# When to Use JDBC Direct vs HikariCP
+- **JDBC Direct**: Suitable for small applications with low concurrency and simple database needs.
+- **HikariCP**: Ideal for production-level applications, especially those with high concurrency, performance demands, or complex database operations.
+# Why Use HikariCP?
+In your case, if you're working on a project with potential multiple users, more database operations, and possibly higher concurrency, HikariCP will be beneficial as it provides faster and more efficient database access.
+
+The HikariCP setup would abstract the connection handling behind a pool, so you don’t need to worry about opening and closing connections every time you make a query.
+
+# Current Scenario with Direct JDBC:
+- **One Connection**: You're opening the connection once and using it throughout the program for multiple queries (listUsers, listChatrooms, listMessages).
+- **No Frequent Open/Close**: Since the connection is reused and only closed at the end, you're not suffering the overhead of opening and closing multiple connections.
+- **Single-threaded Execution**: If your program is not handling concurrent requests, the connection is sufficient for this execution flow.
+# When HikariCP Makes a Difference:
+HikariCP shines when:
+
+**1. Multiple** or Concurrent Connections: If you had a multi-threaded application where each thread or operation needs its own database connection, HikariCP would help manage a pool of connections efficiently, rather than opening a new connection for each thread.
+
+**2. Frequent** Open/Close Cycles: If your code opened and closed database connections frequently (for example, each query or each transaction required a new connection), HikariCP would reduce the overhead by reusing existing connections.
+
+**3. High Load and Scalability*: In a production environment with high load and multiple users accessing the database at the same time, HikariCP would ensure that connections are efficiently managed and reused, preventing bottlenecks or excessive connection creation.
+
+
+
