@@ -237,4 +237,22 @@ HikariCP shines when:
 **3. High Load and Scalability*: In a production environment with high load and multiple users accessing the database at the same time, HikariCP would ensure that connections are efficiently managed and reused, preventing bottlenecks or excessive connection creation.
 
 
+# Summary
+**DataSource interface** :  DataSource refers to an interface in Java that provides an abstraction for establishing and managing database connections. The DataSource serves as an alternative to using DriverManager for obtaining database connections. It's typically used in conjunction with a connection pool like HikariCP to manage connections more efficiently.
+**What Does a DataSource Do?**
+- **Connection Factory**: The DataSource acts as a factory for database connections. Rather than opening a new connection each time using DriverManager.getConnection(), the application requests a connection from the DataSource, which internally manages these connections.
+
+- **Connection Pooling**: When using a connection pool such as HikariCP, the DataSource doesn't just open a new connection every time it's requested. Instead, it manages a pool of pre-established connections, so it can provide a reusable connection to the database and reduce the overhead of creating and closing connections frequently.
+
+- **Centralized Management**: By using a single instance of a DataSource, you ensure that the application has a centralized, efficient way of handling database connections, allowing multiple parts of the application to access the database through a shared, managed resource.
+
+# In Practical Terms
+(The main on ex00)
+- **Without DataSource**: If you use DriverManager, each time your application needs to talk to the database, it opens a new connection, performs its task, and then closes the connection. This can be resource-intensive and slow for larger applications.
+
+(starting from ex01 (using hikariCP))
+- **With DataSource**: The DataSource (especially with HikariCP) keeps a pool of connections ready to be used. When your application needs a connection, it retrieves one from the pool, performs the task, and returns it to the pool. This dramatically improves efficiency and performance.
+
+
+
 
