@@ -4,7 +4,7 @@
 CONTAINER_NAME="my-postgres-container"
 POSTGRES_PASSWORD=trevor123@
 POSTGRES_USER=trevor
-POSTGRES_DB=testDB
+POSTGRES_DB=testdb
 SQL_FILE_1="schema.sql"
 SQL_FILE_2="data.sql"
 HOST_SQL_DIR="./src/main/resources/"  # Directory on the host containing the SQL files
@@ -40,7 +40,7 @@ fi
 echo "Copying SQL files into the container..."
 docker cp $HOST_SQL_DIR/$SQL_FILE_1 $CONTAINER_NAME:$CONTAINER_SQL_DIR/$SQL_FILE_1
 
-docker cp $HOST_SQL_DIR/$SQL_FILE_2 $CONTAINER_NAME:$CONTAINER_SQL_DIR/$SQL_FILE_2
+docker cp $HOST_SQL_DIR/$SQL_FILE_2 $CONTAINER_NAM docker run --name $CONTAINER_NAME -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_DB=$POSTGRES_DB -d -p 5432:5432 postgresE:$CONTAINER_SQL_DIR/$SQL_FILE_2
 
 # Execute the SQL files
 echo "Executing SQL files..."
@@ -57,9 +57,9 @@ echo "PostgreSQL setup and SQL file execution completed successfully!"
 
 
 # Run the Java application
-echo "Running the Java application..."
-mvn clean package
-java -jar target/chatApp-1.0.0.jar
+# echo "Running the Java application..."
+# mvn clean package
+# java -jar target/chatApp-1.1.0.jar
 
 # Cleanup
 # echo "Cleaning up..."
