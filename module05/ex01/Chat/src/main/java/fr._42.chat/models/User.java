@@ -67,23 +67,25 @@ public class User {
 
     @Override
     public String toString() {
-        String  info =  "author={id=" + id+ ",login=\"" + login + "\",password=\""+ password + "\"";
-        String createdROoms = "CreatedRooms = ";
-        String rooms = "socializingRooms = ";
-        if (CreatedRooms.size() == 0)
-        createdROoms += "null";
-        for (Chatroom room : CreatedRooms)
-        {
-            createdROoms += room;
-            createdROoms +="\n";
-        }
-        if (socializingRooms.size() == 0)
-            rooms += "null";
-        for (Chatroom room : socializingRooms)
-        {
-            rooms += room;
-            rooms +="\n";
-        }
+        String  info =  "{id=" + id+ ",login=\"" + login + "\",password=\""+ password + "\"";
+        StringBuilder createdROoms = new StringBuilder("CreatedRooms = ");
+        StringBuilder rooms = new StringBuilder("socializingRooms = ");
+        if (CreatedRooms == null)
+            createdROoms.append("null");
+        else
+            for (Chatroom room : CreatedRooms)
+            {
+                createdROoms.append(room);
+                createdROoms.append("\n");
+            }
+        if (socializingRooms == null)
+            rooms.append("null");
+        else
+            for (Chatroom room : socializingRooms)
+            {
+                rooms.append(room);
+                rooms.append("\n");
+            }
         return info + " " + createdROoms + " " + rooms+ " }";
     }
 }

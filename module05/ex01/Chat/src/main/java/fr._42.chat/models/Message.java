@@ -74,7 +74,8 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message from " + author + " in room " + room + " at " + datetime + " : " + text;
+        return "{\nid=" + id + ",\nauthor=" + author +",\nroom="+room+",\ntext=\"" + text + "\",\ndatetime=" + datetime + "\n}";
+//        return "Message from " + author + " in room " + room + " at " + datetime + " : " + text;
     }
 
 }

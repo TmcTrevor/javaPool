@@ -56,7 +56,9 @@ public class Chatroom {
 
     @Override
     public String toString() {
-        return "Room " + roomName + " with Owner " + this.owner;
+
+        return "{id=" + id + ",name=\"" + roomName+"\",creator="+ owner+" messages=" + (messages == null ? "null" : "Messages")+ "}";
+//        return "Room " + roomName + " with Owner " + this.owner;
     }
 
 

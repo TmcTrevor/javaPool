@@ -12,6 +12,7 @@ import java.util.Scanner;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import fr._42.chat.models.Message;
+import fr._42.chat.models.User;
 import fr._42.chat.repositories.MessageRepositoryJdbcImpl;
 
 public class Main {
@@ -27,6 +28,7 @@ public class Main {
             e.printStackTrace();
     }
     }
+
 
     public static void listChatrooms(Statement st) {
         try {
@@ -74,6 +76,10 @@ HikariDataSource ds = new HikariDataSource(config);
             long id = scanner.nextLong();
            Optional<Message> message =  messageRepositoryJdbcImpl.findById(id);
            System.out.println(message.isPresent() ? message.get().getText() : "");
+           if (message.isPresent()) {
+
+               System.out.println("Message: " + message.get());
+           }
             // // Access the environment variables
             // String dbPassword = dotenv.get("POSTGRES_PASSWORD");
             // String dbUser = dotenv.get("POSTGRES_USER");
