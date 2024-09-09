@@ -1,0 +1,13 @@
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/repositories/MessageRepositoryJdbcImpl.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/exceptions/ChatroomNotFoundException.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/repositories/ChatroomRepository.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/app/Main.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/models/Chatroom.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/repositories/MessageRepository.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/repositories/ChatroomRepositoryJdbcImpl.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/models/User.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/models/Message.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/repositories/UserRepositoryJdbcImpl.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/exceptions/NotSavedSubEntityException.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/repositories/UserRepository.java
+/home/tmctrevor/Desktop/javaPool/module05/ex02/Chat/src/main/java/fr._42.chat/exceptions/UserNotFoundException.java
