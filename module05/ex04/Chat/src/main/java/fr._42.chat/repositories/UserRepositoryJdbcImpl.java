@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepositoryJdbcImpl implements UserRepository {
@@ -38,6 +40,26 @@ public class UserRepositoryJdbcImpl implements UserRepository {
             throw new UserNotFoundException(e.getMessage());
 
         }
+    }
+
+    @Override
+    public List<User> findAll(int page, int size)
+    {
+        ArrayList<User> list = new ArrayList<>(size);
+
+        try {
+            String query = """
+                    SELECT u.id AS "userID", u.* , r.id AS "roomID", r.*, m.id AS "messageID"
+                    FROM "USER" u
+                    JOIN  
+                    """;
+            Connection con = dataSource.getConnection();
+            PreparedStatement st = con.prepareStatement(query);
+        } catch (Exception e)
+        {
+            System.err.println("Error : " +e.getMessage());
+        }
+        return list;
     }
 
 }

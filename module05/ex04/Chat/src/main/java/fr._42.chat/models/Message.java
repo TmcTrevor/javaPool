@@ -9,9 +9,9 @@ import java.sql.Date;
 public class Message {
     private int id;
     private String text;
-    private final User author;
-    private final Chatroom room;
-    private final Date datetime;
+    private  User author;
+    private  Chatroom room;
+    private  Date datetime;
 
 
     public Message(int id, User author, Chatroom room, String text, Date datetime) {
@@ -49,14 +49,22 @@ public class Message {
     public User getAuthor() {
         return author;
     }
+    public void setAuthor(User newUser) {this.author = newUser;}
 
     public Chatroom getRoom() {
         return room;
     }
+    public void setRoom(Chatroom newRoom) {this.room = newRoom;}
 
     public Date getDatetime() {
         return datetime;
     }
+
+    public void setDatetime(Date newDate)
+    {
+        this.datetime = newDate;
+    }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -66,15 +74,12 @@ public class Message {
         return false;
     }
     
-    // @Override
-    // public int hashCode() {
-    //     return Object.hash(id, text, author, room, datetime);
-    // }
+
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * author.hashCode();
-        result = 31 * room.hashCode();
+        result += 31 * author.hashCode();
+        result += 31 * room.hashCode();
         return result;
     }
 

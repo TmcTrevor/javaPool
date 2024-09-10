@@ -41,7 +41,7 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
                     User author = new User(message.getInt("userID"), message.getString("login"), message.getString("password"));
                     User roomOwner = new User(message.getInt("CreatorID"),  message.getString("creatorLogin"), message.getString("creatorPassword"));
                     Chatroom chatroom = new Chatroom(message.getInt("roomID"),roomOwner, message.getString("roomname"));
-                    Message message1 = new Message(message.getInt("message_id"), author, chatroom, message.getString("text"), new Date(message.getTime("datetime").getTime()));
+                    Message message1 = new Message(message.getInt("message_id"), author, chatroom, message.getString("text"), message.getDate("datetime"));
                     return Optional.of(message1);
                 }
 
@@ -84,7 +84,7 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
     @Override
     public void update(Message message) throws NotSavedSubEntityException {
         try {
-            String Query = "UPDATE \"Message\" author = ?, room = ? , text = ? , datetime = ? WHERE id = ?";
+            String Query = "UPDATE \"Message\" SET author = ?, room = ? , text = ? , datetime = ? WHERE id = ?";
             PreparedStatement pst = getPreparedStatement(message, Query);
             pst.setInt(5,message.getId());
             int rowsAffected = pst.executeUpdate();
@@ -115,7 +115,6 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
             Optional<User> userOpt = UserRep.getUserById(message.getAuthor().getId());
             ChatroomRepositoryJdbcImpl chatroomRep = new ChatroomRepositoryJdbcImpl(dataSource);
             Optional<Chatroom> chatroomOpt = chatroomRep.getRoomById(message.getRoom().getId());
-            System.out.println("here1");
             Connection con = dataSource.getConnection();
             PreparedStatement pst = con.prepareStatement(Query,  Statement.RETURN_GENERATED_KEYS);
             pst.setInt(1, message.getAuthor().getId());

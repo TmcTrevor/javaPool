@@ -3,58 +3,22 @@ package fr._42.chat.app;
 // database and retrieving data
 // from db Java Database connectivity
 import java.sql.Connection;
-import java.sql.ResultSet;
+//import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.util.Optional;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import fr._42.chat.models.Chatroom;
+//import fr._42.chat.models.Chatroom;
 import fr._42.chat.models.Message;
+//import fr._42.chat.models.User;
 import fr._42.chat.models.User;
 import fr._42.chat.repositories.MessageRepositoryJdbcImpl;
 
 public class Main {
-
-    public static void listUsers(Statement st) {
-        try {
-            ResultSet rs = st.executeQuery("SELECT * FROM \"User\"");
-            System.err.println("Users:");
-            while (rs.next()) {
-                System.out.println(rs.getString("login"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-    }
-    }
-
-
-    public static void listChatrooms(Statement st) {
-        try {
-            ResultSet rs = st.executeQuery("SELECT * FROM \"Chatroom\"");
-            System.err.println("Chatrooms:");
-            while (rs.next()) {
-                System.out.println(rs.getString("roomName"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void listMessages(Statement st) {
-        try {
-            ResultSet rs = st.executeQuery("SELECT * FROM \"Message\"");
-            System.err.println("Messages:");
-            while (rs.next()) {
-                System.out.println(rs.getString("text") +  " by " + rs.getString("author") + " in Room : " + rs.getString("room"));
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args)
 	{
         Connection connection = null;
         try {
@@ -68,12 +32,19 @@ public class Main {
 
             HikariDataSource ds = new HikariDataSource(config);
             MessageRepositoryJdbcImpl messageRepositoryJdbcImpl = new MessageRepositoryJdbcImpl(ds);
-            User testUser = new User(6, "test", "test");
-            Chatroom testRoom = new Chatroom(13, testUser, "random");
-            Message testmessage = new Message(testUser, testRoom, "SOme random text message1");
-            System.out.println("before : id = " + testmessage.getId());
-            messageRepositoryJdbcImpl.save(testmessage);
-            System.out.println("after : id = " + testmessage.getId());
+
+            Optional<Message> message = messageRepositoryJdbcImpl.findById(6L);
+            if (message.isPresent())
+            {
+                System.out.println("OLD " + message.get());
+                message.get().setText("some Random text updated with new User 3");
+                message.get().setDatetime(null);
+                User testUser = new User(3, "test", "rrr4r5");
+                message.get().setAuthor(testUser);
+                messageRepositoryJdbcImpl.update(message.get());
+               message = messageRepositoryJdbcImpl.findById(6L);
+                message.ifPresent(value -> System.out.println("New " + value));
+            }
 
 
         } catch (RuntimeException e)
