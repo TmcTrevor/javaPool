@@ -56,9 +56,21 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
     {
         try {
             String Query = "INSERT INTO \"Message\" (author, room, text, datetime) VALUES (?,?,?,?)";
-            PreparedStatement pst = getPreparedStatement(message, Query);
+            String relationQuery = "INSERT INTO \"User_ChatRoom\" (userId, chatroomId, type) VALUES (?,?,?) ON CONFLICT DO NOTHING";
+
+            PreparedStatement pst = getPreparedStatement(message, Query,4);
             int rowsAffected = pst.executeUpdate();
             if (rowsAffected > 0) {
+
+                PreparedStatement pst2 = getPreparedStatement(message, relationQuery, 2);
+                pst2.setString(3, "Member");
+//                try {
+
+                    pst2.executeUpdate();
+//                }
+//                catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
                 ResultSet generatedKeys = pst.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     int generatedId = generatedKeys.getInt(1);
@@ -85,7 +97,7 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
     public void update(Message message) throws NotSavedSubEntityException {
         try {
             String Query = "UPDATE \"Message\" SET author = ?, room = ? , text = ? , datetime = ? WHERE id = ?";
-            PreparedStatement pst = getPreparedStatement(message, Query);
+            PreparedStatement pst = getPreparedStatement(message, Query, 4);
             pst.setInt(5,message.getId());
             int rowsAffected = pst.executeUpdate();
             if (rowsAffected > 0) {
@@ -109,18 +121,20 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
         }
     }
 
-    private PreparedStatement getPreparedStatement(Message message, String Query) throws SQLException {
+    private PreparedStatement getPreparedStatement(Message message, String Query, int nbArgs) throws SQLException {
         try {
             UserRepositoryJdbcImpl UserRep = new UserRepositoryJdbcImpl(dataSource);
-            Optional<User> userOpt = UserRep.getUserById(message.getAuthor().getId());
+            UserRep.getUserById(message.getAuthor().getId());
             ChatroomRepositoryJdbcImpl chatroomRep = new ChatroomRepositoryJdbcImpl(dataSource);
-            Optional<Chatroom> chatroomOpt = chatroomRep.getRoomById(message.getRoom().getId());
+            chatroomRep.getRoomById(message.getRoom().getId());
             Connection con = dataSource.getConnection();
             PreparedStatement pst = con.prepareStatement(Query,  Statement.RETURN_GENERATED_KEYS);
             pst.setInt(1, message.getAuthor().getId());
             pst.setInt(2, message.getRoom().getId());
-            pst.setString(3, message.getText());
-            pst.setDate(4, message.getDatetime());
+            if (nbArgs > 2)
+                pst.setString(3, message.getText());
+            if (nbArgs > 3)
+                pst.setDate(4, message.getDatetime());
             return pst;
         } catch (RuntimeException e) {
             throw new NotSavedSubEntityException(e.getMessage());
@@ -129,4 +143,12 @@ public class MessageRepositoryJdbcImpl implements MessageRepository {
 
 
 
+
 }
+
+//SELECT DISTINCT u.id, u.login, cr , sr FROM "User" u
+//JOIN "Chatroom" cr ON cr.owner = u.id
+//JOIN "User_Chatroom" uc ON uc.userId = u.id
+//JOIN "Chatroom" sr ON sr.id = uc.chatroomId
+//ORDER BY u.id;
+//select userid, login, password, type, chatroomid, roomname from (select * from "User" left join "User_Chatroom"  on "User_Chatroom".userId = "User".id ) as Test inner join "Chatroom" on "Chatroom".id = Test.chatroomid

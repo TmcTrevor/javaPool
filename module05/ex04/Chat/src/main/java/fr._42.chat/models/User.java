@@ -9,6 +9,8 @@ public class User {
     private List<Chatroom> socializingRooms;
 
 
+    public User() {}
+
     public User(int id, String login, String password) {
         this.id = id;
         this.login = login;
@@ -19,16 +21,10 @@ public class User {
         this.password = password;
     }
 
-    public boolean checkPassword(String password) {
-        return this.password.equals(password);
-    }
-
     public String getLogin() {
         return login;
     }
-    public void setLogin(String login) {
-        this.login = login;
-    }
+
     public List<Chatroom> getCreatedRooms() {
         return CreatedRooms;
     }
@@ -44,7 +40,10 @@ public class User {
     public int getId() {
         return id;
     }
-    
+    public String getPassword() {
+        return password;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof User) {
@@ -68,8 +67,8 @@ public class User {
     @Override
     public String toString() {
         String  info =  "{id=" + id+ ",login=\"" + login + "\",password=\""+ password + "\"";
-        StringBuilder createdROoms = new StringBuilder("CreatedRooms = ");
-        StringBuilder rooms = new StringBuilder("socializingRooms = ");
+        StringBuilder createdROoms = new StringBuilder(",\nCreatedRooms = ");
+        StringBuilder rooms = new StringBuilder(",\nsocializingRooms = ");
         if (CreatedRooms == null)
             createdROoms.append("null");
         else
