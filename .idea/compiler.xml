@@ -11,6 +11,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="chatApp03" />
         <module name="chatApp04" />
+        <module name="Tests00" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

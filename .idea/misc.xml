@@ -4,21 +4,11 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/module05/ex02/Chat/ex02/pom.xml" />
-        <option value="$PROJECT_DIR$/module05/ex03/Chat/pom.xml" />
-        <option value="$PROJECT_DIR$/module05/ex04/Chat/pom.xml" />
+        <option value="$PROJECT_DIR$/module06/ex00/Tests-folder/pom.xml" />
       </list>
     </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/module05/ex02/Chat/ex02/pom.xml" />
-      </set>
-    </option>
   </component>
-  <component name="PWA">
-    <option name="wasEnabledAtLeastOnce" value="true" />
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="graalvm-jdk-21" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" project-jdk-name="graalvm-jdk-21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
