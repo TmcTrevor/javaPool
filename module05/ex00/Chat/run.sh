@@ -59,7 +59,7 @@ echo "PostgreSQL setup and SQL file execution completed successfully!"
 # Run the Java application
 echo "Running the Java application..."
 mvn clean package
-java -jar target/chatApp-1.0.0.jar
+java -jar target/chatApp00-1.0.0.jar
 
 # Cleanup
 # echo "Cleaning up..."

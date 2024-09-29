@@ -22,6 +22,17 @@ CREATE TABLE IF NOT EXISTS "Chatroom" (
     messages JSONB DEFAULT '[]',
     FOREIGN KEY (owner) REFERENCES "User"(id) ON DELETE CASCADE
 );
+-- Create a table to map which chatrooms the user socializes in
+CREATE TABLE IF NOT EXISTS "User_Chatroom" (
+    userId INT NOT NULL,
+    chatroomId INT NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    PRIMARY KEY (userId, chatroomId),
+    FOREIGN KEY (userId) REFERENCES "User"(id) ON DELETE CASCADE,
+    FOREIGN KEY (chatroomId) REFERENCES "Chatroom"(id) ON DELETE CASCADE
+);
+
+
 
 -- Create the Message table
 CREATE TABLE IF NOT EXISTS "Message" (

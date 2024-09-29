@@ -17,7 +17,7 @@ import fr._42.chat.models.Chatroom;
 //import fr._42.chat.models.Message;
 //import fr._42.chat.models.User;
 import fr._42.chat.models.User;
-import fr._42.chat.repositories.MessageRepositoryJdbcImpl;
+//import fr._42.chat.repositories.MessageRepositoryJdbcImpl;
 import fr._42.chat.repositories.UserRepositoryJdbcImpl;
 
 public class Main {

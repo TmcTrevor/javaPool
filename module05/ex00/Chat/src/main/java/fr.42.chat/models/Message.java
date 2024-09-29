@@ -57,10 +57,15 @@ public class Message {
     // }
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * author.hashCode();
-        result = 31 * room.hashCode();
-        return result;
+        int result = Integer.hashCode(id);  // Use id as part of the hash calculation
+
+        // Incorporate author, ensuring that null values are handled
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+
+        // Incorporate room, ensuring that null values are handled
+        result = 31 * result + (room != null ? room.hashCode() : 0);
+
+        return result;  // Return the final computed hash code
     }
 
 

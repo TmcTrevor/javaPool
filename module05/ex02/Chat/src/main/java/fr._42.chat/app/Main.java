@@ -69,7 +69,7 @@ public class Main {
             HikariDataSource ds = new HikariDataSource(config);
             MessageRepositoryJdbcImpl messageRepositoryJdbcImpl = new MessageRepositoryJdbcImpl(ds);
             User testUser = new User(6, "test", "test");
-            Chatroom testRoom = new Chatroom(13, testUser, "random");
+            Chatroom testRoom = new Chatroom(1, testUser, "random");
             Message testmessage = new Message(testUser, testRoom, "SOme random text message1");
             System.out.println("before : id = " + testmessage.getId());
             messageRepositoryJdbcImpl.save(testmessage);
