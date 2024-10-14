@@ -59,6 +59,7 @@ public class EmbeddedDataSourceTest {
     @Test
     void connectionCheck(){
         assertDoesNotThrow(this::initConnection);
+        assertNotNull(connection);
         System.out.println(connection);
     }
 

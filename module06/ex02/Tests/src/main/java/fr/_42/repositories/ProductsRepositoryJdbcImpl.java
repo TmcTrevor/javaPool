@@ -19,17 +19,18 @@ public class ProductsRepositoryJdbcImpl implements ProductsRepository {
     {
         this.dataSource = dataSource;
     }
+
     @Override
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products";
+        String sql = "SELECT * FROM Product";
         try {
             Connection con = dataSource.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                products.add(new Product(rs.getString("name"), rs.getDouble("price")));
+                products.add(new Product(rs.getInt("id"),rs.getString("name"), rs.getDouble("price")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -40,14 +41,14 @@ public class ProductsRepositoryJdbcImpl implements ProductsRepository {
 
     @Override
     public Optional<Product> findById(long id) {
-        String sql = "SELECT * FROM products WHERE id = ?";
+        String sql = "SELECT * FROM Product WHERE id = ?";
         try {
             Connection con = dataSource.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return Optional.of(new Product(rs.getString("name"), rs.getDouble("price")));
+                return Optional.of(new Product(rs.getInt("id"),rs.getString("name"), rs.getDouble("price")));
             }
 
         }catch (SQLException e) {
@@ -58,7 +59,7 @@ public class ProductsRepositoryJdbcImpl implements ProductsRepository {
 
     @Override
     public void save(Product product) {
-        String sql = "INSERT INTO products (name, price) VALUES (?, ?)";
+        String sql = "INSERT INTO Product (name, price) VALUES (?, ?)";
         try {
             Connection con = dataSource.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -72,7 +73,7 @@ public class ProductsRepositoryJdbcImpl implements ProductsRepository {
 
     @Override
     public void update(Product product) {
-        String sql = "UPDATE products SET name = ?, price = ? WHERE id = ?";
+        String sql = "UPDATE Product SET name = ?, price = ? WHERE id = ?";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -88,7 +89,7 @@ public class ProductsRepositoryJdbcImpl implements ProductsRepository {
 
     @Override
     public void delete(Long id) {
-        String sql = "DELETE FROM products WHERE id = ?";
+        String sql = "DELETE FROM Product WHERE id = ?";
         try {
 
             Connection con = dataSource.getConnection();

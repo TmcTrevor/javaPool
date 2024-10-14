@@ -9,8 +9,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Tests01 (2)" />
         <module name="Tests01 (1)" />
         <module name="chatApp03" />
+        <module name="Tests02" />
         <module name="chatApp04" />
         <module name="Tests01" />
       </profile>

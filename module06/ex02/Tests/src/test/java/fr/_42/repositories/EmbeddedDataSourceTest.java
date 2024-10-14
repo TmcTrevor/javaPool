@@ -1,6 +1,7 @@
 package fr._42.repositories;
 
 //import org.hsqldb.jdbc.JDBCDriver;
+import fr._42.models.Product;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -24,6 +26,7 @@ public class EmbeddedDataSourceTest {
 
     private EmbeddedDatabase db;
     private Connection connection;
+    private ProductsRepositoryJdbcImpl testImpl;
 
     @BeforeEach
     void init() throws Exception {
@@ -35,7 +38,7 @@ public class EmbeddedDataSourceTest {
     @AfterEach
     void tearDown() throws Exception {
         if (connection != null) {
-            connection.close();  // Close the connection
+            connection.close(); // Close the connection
         }
         if (db != null) {
             db.shutdown();  // Shut down the embedded database
@@ -53,6 +56,8 @@ public class EmbeddedDataSourceTest {
                 .build();
 
         connection = db.getConnection();
+
+
     }
 
 
@@ -65,4 +70,7 @@ public class EmbeddedDataSourceTest {
     public Connection getConnection() {
         return connection;
     }
+
+
+
 }
