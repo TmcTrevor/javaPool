@@ -33,7 +33,7 @@ public class NumberWorkerTest {
     {
         NumberWorker numberWorker = new NumberWorker();
         boolean check = numberWorker.isPrime(number);
-//        System.out.println(number + " value " + check);
+        System.out.println(number + " value " + check);
         assertFalse(check);
     }
 
