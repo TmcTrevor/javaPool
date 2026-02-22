@@ -27,3 +27,11 @@ replay_pid*
 target/
 */target/
 **/target/
+
+Ds_Store
+*.DS_Store
+*.swp
+*.swo
+
+./reflexionFolder
+./reflexionFolder/*

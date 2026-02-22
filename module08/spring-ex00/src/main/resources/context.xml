@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Step 1: Define PreProcessor beans -->
+
+    <!-- PreProcessor that converts to UPPERCASE -->
+    <bean id="preProcessorToUpper"
+          class="fr._42.printer.logic.PreProcessorToUpperImpl"/>
+
+    <!-- PreProcessor that converts to lowercase -->
+    <bean id="preProcessorToLower"
+          class="fr._42.printer.logic.PreProcessorToLowerImpl"/>
+
+    <!-- Step 2: Define Renderer beans -->
+
+    <!-- Renderer that outputs to System.out -->
+    <bean id="rendererStandard"
+          class="fr._42.printer.logic.RendererStandardImpl">
+        <!-- Constructor injection: inject preProcessorToUpper -->
+<!--        <constructor-arg ref="preProcessorToUpper"/>-->
+
+        <constructor-arg ref="preProcessorToLower"/>
+    </bean>
+
+    <!-- Renderer that outputs to System.err -->
+    <bean id="rendererErr"
+          class="fr._42.printer.logic.RendererErrImpl">
+        <!-- Constructor injection: inject preProcessorToLower -->
+<!--        <constructor-arg ref="preProcessorToLower"/>-->
+
+        <constructor-arg ref="preProcessorToUpper"/>
+    </bean>
+
+    <!-- Step 3: Define Printer beans -->
+
+    <!-- Printer with prefix -->
+    <bean id="printerWithPrefix"
+          class="fr._42.printer.logic.PrinterWithPrefixImpl">
+        <!-- Constructor injection: inject rendererErr -->
+        <constructor-arg ref="rendererErr"/>
+        <!-- Property injection: set prefix -->
+        <property name="prefix" value="PREFIX"/>
+    </bean>
+
+    <!-- Printer with date/time -->
+    <bean id="printerWithDateTime"
+          class="fr._42.printer.logic.PrinterWithDateTimeImpl">
+        <!-- Constructor injection: inject rendererStandard -->
+        <constructor-arg ref="rendererStandard"/>
+    </bean>
+
+</beans>
